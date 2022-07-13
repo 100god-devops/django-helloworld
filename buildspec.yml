@@ -16,3 +16,6 @@ phases:
       - echo Build completed on `date`
       - echo Pushing the Docker image...
       - docker push 870165402940.dkr.ecr.us-east-1.amazonaws.com/django-pipeline:latest
+      - printf '[{"name":"your.task.definition.name","imageUri":"%s"}]' 870165402940.dkr.ecr.us-east-1.amazonaws.com/django-pipeline:latest > imagedefinitions.json
+  artifacts:
+    files: imagedefinitions.json
