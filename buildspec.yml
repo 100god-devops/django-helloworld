@@ -16,3 +16,9 @@ phases:
       - echo Build completed on `date`
       - echo Pushing the Docker image...
       - docker push 870165402940.dkr.ecr.us-east-1.amazonaws.com/django-pipeline:latest
+  artifacts:
+    files:
+      - '**/*'
+        base-directory: django-pipeline
+        name: codepipeline-us-east-1-17792590164
+        discard-paths: no
