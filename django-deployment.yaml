@@ -15,7 +15,7 @@ spec:
         app: django
     spec:
       containers:
-        - image: 100godd/django-helloworld:latest
+        - image: 870165402940.dkr.ecr.us-east-1.amazonaws.com/django-pipeline:latest
           name: django
           ports:
             - containerPort: 8000
