@@ -1,4 +1,5 @@
 version: 0.2
+run-as: root
 
 phases:
 
@@ -12,12 +13,16 @@ phases:
       - source ~/.bashrc
       - echo 'Check kubectl version'
       - kubectl version --short --client
-      - chmod +x prereqs.sh
-      - sh prereqs.sh
+      - aws eks update-kubeconfig --name eks-django-app --region us-east-1
+        #      - chmod +x prereqs.sh
+        #      - sh prereqs.sh
 
   pre_build:
     commands:
       - echo Logging in to Amazon ECR...
+      - kubectl config view --minify
+      - echo check kubectl access
+      - kubectl get svc
       - aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 870165402940.dkr.ecr.us-east-1.amazonaws.com
   build:
     commands:
@@ -30,6 +35,9 @@ phases:
       - echo Build completed on `date`
       - echo Pushing the Docker image...
       - docker push 870165402940.dkr.ecr.us-east-1.amazonaws.com/django-pipeline:latest
+      - echo Push the latest image to cluster
+        #      - kubectl apply -f eks_cicd/deployment.yaml
+      - kubectl rollout restart -f django-app
   artifacts:
     files:
       - '**/*'
