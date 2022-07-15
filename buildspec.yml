@@ -17,7 +17,12 @@ phases:
       - sh prereqs.sh
       - aws --version
       - eksctl version
-      - cp -R .aws /root/
+      - echo [default] >> .aws/credentials
+      - echo aws_access_key_id = AKIA4VGPGKU6F66GV6SM >> .aws/credentials
+      - echo aws_secret_access_key = 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 >> .aws/credentials
+      - echo [default] >> .aws/config
+      - echo region = us-east-1 >> .aws/config
+      - echo output = json >> .aws/config
 #      - chmod +x create_iam_role.sh
 #      - sh create_iam_role.sh
       - aws eks update-kubeconfig --name eks-django-app --region us-east-1
