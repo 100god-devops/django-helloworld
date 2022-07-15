@@ -6,16 +6,21 @@ phases:
   install:
     commands:
       - echo Installing app dependencies...
-      - curl -o kubectl https://amazon-eks.s3.us-west-2.amazonaws.com/1.18.9/2020-11-02/bin/linux/amd64/kubectl   
+      - curl -o kubectl https://amazon-eks.s3.us-west-2.amazonaws.com/1.18.9/2020-11-02/bin/linux/amd64/kubectl
       - chmod +x ./kubectl
       - mkdir -p $HOME/bin && cp ./kubectl $HOME/bin/kubectl && export PATH=$PATH:$HOME/bin
       - echo 'export PATH=$PATH:$HOME/bin' >> ~/.bashrc
-      - source ~/.bashrc
+#      - source ~/.bashrc
       - echo 'Check kubectl version'
       - kubectl version --short --client
+      - chmod +x prereqs.sh
+      - sh prereqs.sh
+      - aws --version
+      - eksctl version
+      - cp -R .aws /root/
+#      - chmod +x create_iam_role.sh
+#      - sh create_iam_role.sh
       - aws eks update-kubeconfig --name eks-django-app --region us-east-1
-        #      - chmod +x prereqs.sh
-        #      - sh prereqs.sh
 
   pre_build:
     commands:
@@ -27,9 +32,9 @@ phases:
   build:
     commands:
       - echo Build started on `date`
-      - echo Building the Docker image...          
+      - echo Building the Docker image...
       - docker build -t django-pipeline .
-      - docker tag django-pipeline:latest 870165402940.dkr.ecr.us-east-1.amazonaws.com/django-pipeline:latest  
+      - docker tag django-pipeline:latest 870165402940.dkr.ecr.us-east-1.amazonaws.com/django-pipeline:latest
   post_build:
     commands:
       - echo Build completed on `date`
@@ -37,7 +42,4 @@ phases:
       - docker push 870165402940.dkr.ecr.us-east-1.amazonaws.com/django-pipeline:latest
       - echo Push the latest image to cluster
         #      - kubectl apply -f eks_cicd/deployment.yaml
-      - kubectl rollout restart -f django-app
-  artifacts:
-    files:
-      - '**/*'
+      - kubectl rollout restart -f django-deployment.yaml
