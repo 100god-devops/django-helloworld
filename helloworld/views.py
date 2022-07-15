@@ -1,4 +1,4 @@
 from django.http import HttpResponse
 
 def index(request):
-    return HttpResponse("Hello Your Deployments Done using Pipeline")
+    return HttpResponse("Hello Deployment Done")
