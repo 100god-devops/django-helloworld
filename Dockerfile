@@ -5,6 +5,7 @@ RUN apt install python3-dev libpq-dev nginx python3-pip python3-virtualenv sqlit
 #CMD ["chmod", "+x", "./install"]
 #CMD ["sudo", "./install", "auto"]
 #RUN pip install django gunicorn psycopg2
+RUN dependencies_install.sh 
 ADD . /opt/django-helloworld/
 WORKDIR /opt/django-helloworld/
 RUN pip install -r requirements.txt
