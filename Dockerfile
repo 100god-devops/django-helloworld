@@ -5,9 +5,9 @@ RUN apt install python3-dev libpq-dev nginx python3-pip python3-virtualenv sqlit
 #CMD ["chmod", "+x", "./install"]
 #CMD ["sudo", "./install", "auto"]
 RUN pip install django gunicorn psycopg2
-RUN mkdir -p /root/.aws
-COPY .aws/credentials /root/.aws/credentials
-COPY .aws/config /root/.aws/config
+#RUN mkdir -p /root/.aws
+#COPY .aws/credentials /root/.aws/credentials
+#COPY .aws/config /root/.aws/config
 #CMD ["touch", "/root/.aws/credentials"]
 #CMD ["touch", "/root/.aws/config"]
 #CMD ["echo", "[default]", ">>", "/root/.aws/credentials"]
