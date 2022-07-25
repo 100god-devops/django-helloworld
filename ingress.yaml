@@ -19,11 +19,24 @@ metadata:
   labels:
     app: django
 
+    #spec:
+    #  ingressClassName: my-aws-ingress-class # Ingress Class
+    #  defaultBackend:
+    #    service:
+    #      name: django
+    #      port:
+    #        number: 8000
+
 spec:
   ingressClassName: my-aws-ingress-class # Ingress Class
-  defaultBackend:
-    service:
-      name: django
-      port:
-        number: 8000
+  rules:
+    - http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: django
+                port: 
+                  number: 80
 
